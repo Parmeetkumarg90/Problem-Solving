@@ -143,7 +143,9 @@ char **most_frequent_word(const char *text, const char **stopwords, int stopcoun
     {
         return nullptr;
     }
-    return nullptr;
+    char **allWords = tokenizer(text);
+    char **frequentWords = new char *[1];
+    return frequentWords;
 }
 
 // Task 2
