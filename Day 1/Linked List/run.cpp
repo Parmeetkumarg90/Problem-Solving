@@ -61,14 +61,16 @@ int main()
             break;
         case 'S':
         { // searching
+            index = -1;
             cout << "Enter a value: ";
-            cin >> value;
-            bool isPresent = llObj->isPresent(value);
+            cin >> index;
+            Node<int> *isPresent = llObj->isPresent(index);
             cout << "\nValue present: ";
-            if (isPresent)
-                cout << "True";
+            if (!isPresent)
+                cout << "Not available";
             else
-                cout << "False";
+                cout << isPresent->val;
+            index = -1;
             break;
         }
         case 'O': // displaying

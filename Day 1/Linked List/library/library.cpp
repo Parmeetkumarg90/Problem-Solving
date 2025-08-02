@@ -18,6 +18,12 @@ LL<valType>::LL()
 template <typename valType>
 LL<valType>::~LL()
 {
+    clear();
+}
+
+template <typename valType>
+void LL<valType>::clear()
+{
     Node<valType> *deleteNode = nullptr;
     while (head)
     {
@@ -211,18 +217,20 @@ void LL<valType>::deletionAtEnd()
 }
 
 template <typename valType>
-bool LL<valType>::isPresent(valType val)
+Node<valType> *LL<valType>::isPresent(int index)
 {
-    Node<valType> *traverse = head;
-    while (traverse)
+    if (count < index || index < 0 || !head)
     {
-        if (isMatched(traverse->val, val))
-        {
-            return true;
-        }
+        cout << "Index is out of range";
+        return nullptr;
+    }
+    Node<valType> *traverse = head;
+    while (traverse && index > 1)
+    {
+        index--;
         traverse = traverse->next;
     }
-    return false;
+    return traverse;
 }
 
 template <typename valType>
@@ -277,3 +285,10 @@ bool LL<valType>::isMatched(int val1, int val2)
 {
     return val1 == val2;
 }
+
+template <typename valType>
+LL<valType> LL<valType>::operator=(LL<valType> *obj)
+{
+}
+
+// memory leak in operator overloading

@@ -40,9 +40,16 @@ public:
     void deletionAtEnd();
 
     // searching
-    bool isPresent(valType val);
+    Node<valType> *isPresent(int index);
 
+    // display
     void display();
+
+    // clear whole linked list
+    void clear();
+
+    // operator overloading for creating new obj
+    LL<valType> operator=(LL<valType> *obj);
 };
 
 #include "./library.cpp"
