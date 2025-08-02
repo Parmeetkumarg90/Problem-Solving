@@ -33,6 +33,11 @@ void Node<keyType, valueType>::setNext(Node<keyType, valueType> *next)
 {
     this->next = next;
 }
+template <typename keyType, typename valueType>
+void Node<keyType, valueType>::setVal(valueType val)
+{
+    this->val = val;
+}
 
 template <typename keyType, typename valueType>
 HashMap<keyType, valueType>::HashMap()
@@ -403,6 +408,33 @@ bool isMatched(const char *stored, const char *key)
         i++;
     }
     return stored[i] == '\0' && key[i] == '\0';
+}
+
+template <typename keyType, typename valueType>
+void HashMap<keyType, valueType>::setValue(keyType key, valueType val)
+{
+    int headPosition = hashFunction(key);
+    if (!HashTable[headPosition]) // no node
+    {
+        return;
+    }
+    Node<keyType, valueType> *head = getPreviousNodeForKey(key), *headNode = HashTable[headPosition];
+    if (head)
+    {
+        if (head->getNext() && head->getNext()->getKey() == key)
+        {
+            head->getNext()->setVal(val); // found at middle
+            return;
+        }
+    }
+    else
+    {
+        if (headNode && headNode->getKey() == key)
+        {
+            cout << "\nKey-Value pair {" << key << "," << val << "} already exists"; // found at head
+            return;
+        }
+    }
 }
 
 template <typename keyType, typename valueType>

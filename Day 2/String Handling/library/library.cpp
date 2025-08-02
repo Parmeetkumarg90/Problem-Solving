@@ -4,6 +4,8 @@
 
 using namespace std;
 
+// Task 1
+
 int size_tmy_strlen(const char *s) // return length before '\0'
 {
     int count;
@@ -25,13 +27,19 @@ int my_strcmp(const char *a, const char *b) // lexicographical compare
     return 0;
 }
 
-char *lowercase(char *ch)
+void lowercase(char *ch)
 {
-    if (*ch >= 65 && *ch < 97)
+    if (!ch)
+        return;
+    int i = 0;
+    while (ch[i] != '\0')
     {
-        return (ch + 97);
+        if (ch[i] >= 'A' && ch[i] <= 'Z')
+        {
+            ch[i] += 32;
+        }
+        i++;
     }
-    return ch;
 }
 
 // Copy src into dest
@@ -76,39 +84,6 @@ char *my_strchr(const char *s, int c)
     return nullptr;
 }
 
-// Substring search
-char *my_strstr(const char *haystack, const char *needle)
-{
-    int sizeOfNeedle = size_tmy_strlen(needle), sizeOfHayStack = size_tmy_strlen(haystack);
-    for (int i = 0; i < sizeOfHayStack; i++)
-    {
-        for (int j = 0; j < sizeOfNeedle; j++)
-        {
-            if (haystack[i] == needle[j])
-            {
-                int compareLength = 0, traverI = i;
-                for (int k = 0; k < sizeOfNeedle; k++)
-                {
-                    if (haystack[traverI] == needle[k])
-                    {
-                        traverI++;
-                        compareLength++;
-                    }
-                    else
-                    {
-                        k = sizeOfNeedle;
-                    }
-                }
-                if (compareLength == sizeOfNeedle)
-                {
-                    return (char *)&haystack[i];
-                }
-            }
-        }
-    }
-    return nullptr;
-}
-
 // Reverse a string in place
 void reverse_inplace(char *s)
 {
@@ -145,7 +120,7 @@ int count_words(const char *s)
     bool isWord = false;
     for (int i = 0; i < sizeOfS; i++)
     {
-        if (s[i] == ' ' || s[i] == ',' || s[i] == '.' || s[i] == '!' || s[i] == '\n' || s[i] == ';' || s[i] == ',' || s[i] == '-')
+        if ((s[i] >= 97 && s[i] <= 122) || (s[i] >= 65 && s[i] <= 90))
         {
             if (isWord)
             {
@@ -161,40 +136,52 @@ int count_words(const char *s)
     return totalWord;
 }
 
+// Most frequently used word (ignoring stopwords)
+char **most_frequent_word(const char *text, const char **stopwords, int stopcount)
+{
+    if (!text)
+    {
+        return nullptr;
+    }
+    return nullptr;
+}
+
+// Task 2
+
 char **tokenizer(const char *data)
 {
-    // if (!data)
-    // {
-    //     return nullptr;
-    // }
-    // int totalWords = count_words(data), wordI = 0, fieldI = 0, sizeOfData = size_tmy_strlen(data);
-    // // char **allFields = new char *[totalWords], *eachWord = new char[15];
-    // bool isWord = false;
-    // for (int i = 0; i < sizeOfData; i++)
-    // {
-    //     if (data[i] == ' ' || data[i] == ',' || data[i] == '.' || data[i] == '!' || data[i] == '\n' || data[i] == ';' || data[i] == ',' || data[i] == '-')
-    //     {
-    //         if (isWord)
-    //         {
-    //             // for (int j = 0; j < wordI; j++)
-    //             // {
-    //             //     cout << eachWord[j];
-    //             //     allFields[fieldI][j] = eachWord[j];
-    //             // }
-    //             // fieldI++;
-    //             // cout << eachWord << " ";
-    //             wordI = 0;
-    //         }
-    //         isWord = false;
-    //     }
-    //     else
-    //     {
-    //         // eachWord[wordI] = data[i];
-    //         wordI++;
-    //         // eachWord[wordI] = '\0';
-    //         isWord = true;
-    //     }
-    // }
+    if (!data)
+    {
+        return nullptr;
+    }
+    int totalWords = count_words(data), wordI = 0, fieldI = 0, sizeOfData = size_tmy_strlen(data);
+    char **allFields = new char *[totalWords], *eachWord = new char[15];
+    bool isWord = false;
+    for (int i = 0; i < sizeOfData; i++)
+    {
+        if ((data[i] >= 97 && data[i] <= 122) || (data[i] >= 65 && data[i] <= 90))
+        {
+            if (isWord)
+            {
+                for (int j = 0; j < wordI; j++)
+                {
+                    cout << eachWord[j];
+                    allFields[fieldI][j] = eachWord[j];
+                }
+                fieldI++;
+                cout << eachWord << " ";
+                wordI = 0;
+            }
+            isWord = false;
+        }
+        else
+        {
+            eachWord[wordI] = data[i];
+            wordI++;
+            eachWord[wordI] = '\0';
+            isWord = true;
+        }
+    }
     return nullptr;
 }
 
@@ -206,7 +193,7 @@ char *readFile(const char *filePath)
         return nullptr;
     }
     int i = 0;
-    char ch, *allData = new char[100];
+    char ch, *allData = new char[1000];
     while (file.get(ch))
     {
         allData[i] = ch;
@@ -220,29 +207,64 @@ char *readFile(const char *filePath)
 
 void clearArrayOfString(char **data)
 {
-    int i = 0;
-    while (*data[i] != '\0')
-    {
-        if (data[i])
-        {
-            delete[] data[i];
-            data[i] = nullptr;
-        }
-        i++;
-    }
-    delete[] data;
-    data = nullptr;
+    // int i = 0;
+    // while (data[i])
+    // {
+    //     if (data[i])
+    //     {
+    //         delete[] data[i];
+    //         data[i] = nullptr;
+    //     }
+    //     i++;
+    // }
+    // delete[] data;
+    // data = nullptr;
 }
 
 void clearCharacters(char *data)
 {
-    delete[] data;
-    data = nullptr;
+    // delete[] data;
+    // data = nullptr;
 }
 
-// Most frequently used word (ignoring stopwords)
-char *most_frequent_word(const char *text, const char **stopwords, int stopcount)
+// Task 3
+// template <typename keyType, typename valType>
+// char *fillPlaceholder(char *text, HashMap<keyType, valType> *obj) {}
+
+// Task 4
+// Substring search
+char *my_strstr(const char *haystack, const char *needle)
 {
-    cout << stopcount;
+    char *newhaystack = my_strcpy(new char[size_tmy_strlen(haystack) + 1], haystack);
+    char *newneedle = my_strcpy(new char[size_tmy_strlen(haystack) + 1], needle);
+    lowercase(newhaystack);
+    lowercase(newneedle);
+    int sizeOfNeedle = size_tmy_strlen(newneedle), sizeOfHayStack = size_tmy_strlen(newhaystack);
+    for (int i = 0; i < sizeOfHayStack; i++)
+    {
+        for (int j = 0; j < sizeOfNeedle; j++)
+        {
+            if (newhaystack[i] == newneedle[j])
+            {
+                int compareLength = 0, traverI = i;
+                for (int k = 0; k < sizeOfNeedle; k++)
+                {
+                    if (newhaystack[traverI] == newneedle[k])
+                    {
+                        traverI++;
+                        compareLength++;
+                    }
+                    else
+                    {
+                        k = sizeOfNeedle;
+                    }
+                }
+                if (compareLength == sizeOfNeedle)
+                {
+                    return (char *)&newhaystack[i];
+                }
+            }
+        }
+    }
     return nullptr;
 }
