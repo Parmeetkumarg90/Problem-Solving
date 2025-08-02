@@ -33,6 +33,11 @@ void Node<keyType, valueType>::setNext(Node<keyType, valueType> *next)
 {
     this->next = next;
 }
+template <typename keyType, typename valueType>
+void Node<keyType, valueType>::setVal(valueType val)
+{
+    this->val = val;
+}
 
 template <typename keyType, typename valueType>
 HashMap<keyType, valueType>::HashMap()
@@ -73,36 +78,26 @@ template <typename keyType, typename valueType>
 void HashMap<keyType, valueType>::hashInsertion(keyType key, valueType val)
 {
     int headPosition = hashFunction(key);
-    if (!HashTable[headPosition]) // no node
+    Node<keyType, valueType> *headNode = HashTable[headPosition];
+
+    Node<keyType, valueType> *current = headNode;
+    while (current)
     {
-        HashTable[headPosition] = new Node(key, val); // insert at beginning
-        cout << "\nKey-Value pair {" << key << "," << val << "} added Successfully";
-        totalElements++;
-        return;
-    }
-    Node<keyType, valueType> *head = getPreviousNodeForKey(key), *headNode = HashTable[headPosition];
-    if (head)
-    {
-        if (!head->getNext())
+        if (isMatched(current->getKey(), key))
         {
-            head->setNext(new Node(key, val)); // insert at end
-        }
-        else if (head->getNext() && head->getNext()->getKey() == key)
-        {
-            cout << "\nKey-Value pair {" << key << "," << val << "} already exists"; // found at middle
+            cout << "\nKey-Value pair {" << key << "," << val << "} already exists";
             return;
         }
+        current = current->getNext();
     }
-    else
-    {
-        if (headNode && headNode->getKey() == key)
-        {
-            cout << "\nKey-Value pair {" << key << "," << val << "} already exists"; // found at head
-            return;
-        }
-    }
-    totalElements++;
+
+    Node<keyType, valueType> *newNode = new Node<keyType, valueType>(key, val);
+    newNode->setNext(headNode);
+    HashTable[headPosition] = newNode;
+
     cout << "\nKey-Value pair {" << key << "," << val << "} added Successfully";
+    totalElements++;
+
     if (((totalElements * 100) / size) >= 75)
     {
         resizeHash();
@@ -289,9 +284,11 @@ void HashMap<keyType, valueType>::resizeHash()
     }
     else
     {
+        int oldSize = size;
         Node<keyType, valueType> **oldBucket = HashTable;
         HashTable = new Node<keyType, valueType> *[size * 2]();
-        for (int i = 0; i < size; i++)
+        size = size * 2;
+        for (int i = 0; i < oldSize; i++)
         {
             Node<keyType, valueType> *eachHead = oldBucket[i], *deleteNode = nullptr;
             while (eachHead)
@@ -303,7 +300,6 @@ void HashMap<keyType, valueType>::resizeHash()
                 delete deleteNode;
             }
         }
-        size = size * 2;
         delete[] oldBucket;
     }
 }
@@ -403,6 +399,52 @@ bool isMatched(const char *stored, const char *key)
         i++;
     }
     return stored[i] == '\0' && key[i] == '\0';
+}
+
+// template <typename keyType, typename valueType>
+// void HashMap<keyType, valueType>::setValue(keyType key, valueType val)
+// {
+//     int headPosition = hashFunction(key);
+//     if (!HashTable[headPosition]) // no node
+//     {
+//         return;
+//     }
+//     Node<keyType, valueType> *head = getPreviousNodeForKey(key), *headNode = HashTable[headPosition];
+//     if (head)
+//     {
+//         if (head->getNext() && head->getNext()->getKey() == key)
+//         {
+//             head->getNext()->setVal(val); // found at middle
+//             return;
+//         }
+//     }
+//     else
+//     {
+//         if (headNode && headNode->getKey() == key)
+//         {
+//             return;
+//         }
+//     }
+// }
+
+template <typename keyType, typename valueType>
+Node<keyType, valueType> *HashMap<keyType, valueType>::getNode(keyType key)
+{
+    int headPosition = hashFunction(key);
+    Node<keyType, valueType> *headNode = HashTable[headPosition];
+    if (!headNode)
+    {
+        return nullptr;
+    }
+    while (headNode)
+    {
+        if (isMatched(headNode->getKey(), key))
+        {
+            return headNode;
+        }
+        headNode = headNode->getNext();
+    }
+    return nullptr;
 }
 
 template <typename keyType, typename valueType>

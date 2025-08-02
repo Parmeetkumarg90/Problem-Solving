@@ -36,6 +36,7 @@ public:
     valueType getValue();
     Node<keyType, valueType> *getNext();
     void setNext(Node<keyType, valueType> *next);
+    void setVal(valueType val);
 };
 
 template <typename keyType, typename valueType>
@@ -46,8 +47,8 @@ private:
     Node<keyType, valueType> **HashTable;
 
     void resizeHash();
-    Node<keyType, valueType> *getPreviousNodeForKey(keyType key);
     int hashFunction(keyType key);
+    Node<keyType, valueType> *getPreviousNodeForKey(keyType key);
 
 public:
     // constructors
@@ -63,6 +64,8 @@ public:
     void clear();
     bool empty();
     int count();
+    // void setValue(keyType key, valueType val);
+    Node<keyType, valueType> *getNode(keyType key);
 
     // operator overloading for creating new obj
     HashMap<keyType, valueType> operator=(HashMap<keyType, valueType> *obj);

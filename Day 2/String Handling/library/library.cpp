@@ -143,8 +143,43 @@ char **most_frequent_word(const char *text, const char **stopwords, int stopcoun
     {
         return nullptr;
     }
+    HashMap<char *, int> *obj = new HashMap<char *, int>();
     char **allWords = tokenizer(text);
-    char **frequentWords = new char *[1];
+    if (!allWords || !allWords[0])
+    {
+        cout << "Tokenizer returned nothing!\n";
+        return nullptr;
+    }
+    cout << "token: ";
+    for (int i = 0; allWords[i]; i++)
+    {
+        cout << " " << allWords[i];
+        if (obj->isPresent(allWords[i]))
+        {
+            Node<char *, int> *node = obj->getNode(allWords[i]);
+            node->setVal(node->getValue() + 1);
+        }
+        else
+        {
+            obj->hashInsertion(allWords[i], 1);
+        }
+    }
+    char **frequentWords = new char *[0]();
+    cout << "all words: ";
+    for (int i = 0; allWords[i]; i++)
+    {
+        cout << i;
+        Node<char *, int> *nodeobj = obj->getNode(allWords[i]);
+        if (nodeobj)
+        {
+            cout << nodeobj->getKey() << " -> " << nodeobj->getValue() << "\n";
+        }
+        else
+        {
+            cout << "not found";
+        }
+    }
+    delete obj;
     return frequentWords;
 }
 
@@ -161,7 +196,7 @@ char **tokenizer(const char *data)
     bool isWord = false;
     for (i = 0; data[i] != '\0'; i++)
     {
-        if (data[i] == ',' || data[i] == '\n' || data[i] == '\0')
+        if (data[i] == ' ' || data[i] == ',' || data[i] == '\n')
         {
             if (isWord)
             {
@@ -184,6 +219,15 @@ char **tokenizer(const char *data)
             isWord = true;
         }
     }
+    if (isWord)
+    {
+        allFields[fieldI] = new char[wordI + 1];
+        for (int j = 0; j < wordI; j++)
+            allFields[fieldI][j] = eachWord[j];
+        allFields[fieldI][wordI] = '\0';
+        fieldI++;
+    }
+
     allFields[fieldI] = nullptr;
     delete[] eachWord;
     return allFields;
