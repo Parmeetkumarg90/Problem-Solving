@@ -147,29 +147,29 @@ char **most_frequent_word(const char *text, const char **stopwords, int stopcoun
 }
 
 // Task 2
-
 char **tokenizer(const char *data)
 {
     if (!data)
     {
         return nullptr;
     }
-    int totalWords = count_words(data), wordI = 0, fieldI = 0, sizeOfData = size_tmy_strlen(data);
-    char **allFields = new char *[totalWords], *eachWord = new char[15];
+    int wordI = 0, fieldI = 0, i;
+    char **allFields = new char *[50];
+    char *eachWord = new char[15];
     bool isWord = false;
-    for (int i = 0; i < sizeOfData; i++)
+    for (i = 0; data[i] != '\0'; i++)
     {
-        if ((data[i] >= 97 && data[i] <= 122) || (data[i] >= 65 && data[i] <= 90))
+        if (data[i] == ',' || data[i] == '\n' || data[i] == '\0')
         {
             if (isWord)
             {
+                allFields[fieldI] = new char[wordI + 1];
                 for (int j = 0; j < wordI; j++)
                 {
-                    cout << eachWord[j];
                     allFields[fieldI][j] = eachWord[j];
                 }
+                allFields[fieldI][wordI] = '\0';
                 fieldI++;
-                cout << eachWord << " ";
                 wordI = 0;
             }
             isWord = false;
@@ -182,7 +182,9 @@ char **tokenizer(const char *data)
             isWord = true;
         }
     }
-    return nullptr;
+    allFields[fieldI] = nullptr;
+    delete[] eachWord;
+    return allFields;
 }
 
 char *readFile(const char *filePath)
@@ -207,24 +209,23 @@ char *readFile(const char *filePath)
 
 void clearArrayOfString(char **data)
 {
-    // int i = 0;
-    // while (data[i])
-    // {
-    //     if (data[i])
-    //     {
-    //         delete[] data[i];
-    //         data[i] = nullptr;
-    //     }
-    //     i++;
-    // }
-    // delete[] data;
-    // data = nullptr;
+    int i = 0;
+    while (data[i] != nullptr)
+    {
+        if (data[i])
+        {
+            delete[] data[i];
+        }
+        i++;
+    }
+    delete[] data;
+    data = nullptr;
 }
 
 void clearCharacters(char *data)
 {
-    // delete[] data;
-    // data = nullptr;
+    delete[] data;
+    data = nullptr;
 }
 
 // Task 3

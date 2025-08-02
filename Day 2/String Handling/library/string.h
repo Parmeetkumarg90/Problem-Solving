@@ -7,7 +7,6 @@ int my_strcmp(const char *a, const char *b);                                    
 char *my_strcpy(char *dest, const char *src);                                       // copy src into dest
 char *my_strcat(char *dest, const char *src);                                       // append src to dest
 char *my_strchr(const char *s, int c);                                              // find first occurrence of char
-char *my_strstr(const char *haystack, const char *needle);                          // substring search
 void reverse_inplace(char *s);                                                      // reverse a string
 int is_palindrome(const char *s);                                                   // check if palidrome
 int count_words(const char *s);                                                     // count words
@@ -22,5 +21,8 @@ void clearCharacters(char *data);     // clear a array of characters
 
 // // Task 3
 // char *fillPlaceholder(char *text, HashMap<keyType, valType> *obj);
+
+// // Task 4
+char *my_strstr(const char *haystack, const char *needle); // substring search
 
 #include "./library.cpp"

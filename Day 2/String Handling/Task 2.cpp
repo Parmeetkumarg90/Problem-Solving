@@ -20,8 +20,13 @@ int main()
     }
     allData[i] = '\0';
     file.close();
-    char **fields = tokenizer(allData);
-    cout << fields;
+    char **fields = new char *[count_words(allData) + 1];
+    fields = tokenizer(allData);
+    for (int i = 0; fields[i]; i++)
+    {
+        cout << "'" << fields[i] << "' ";
+    }
+    clearArrayOfString(fields);
     cout << "\n";
     return 0;
 }
