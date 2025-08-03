@@ -8,8 +8,8 @@ using namespace std;
 
 int size_tmy_strlen(const char *s) // return length before '\0'
 {
-    int count;
-    for (count = 0; s[count] != '\0'; count++)
+    int count = 0;
+    for (count = 0; s[count] && s[count] != '\0'; count++)
     {
     }
     return count;
@@ -147,40 +147,44 @@ char **most_frequent_word(const char *text, const char **stopwords, int stopcoun
     char **allWords = tokenizer(text);
     if (!allWords || !allWords[0])
     {
-        cout << "Tokenizer returned nothing!\n";
         return nullptr;
     }
-    cout << "token: ";
+    char **frequentWords = new char *[5]();
+    int wordI = 0;
     for (int i = 0; allWords[i]; i++)
     {
-        cout << " " << allWords[i];
-        if (obj->isPresent(allWords[i]))
+        bool isStopWord = findWordInArrayOfChar(allWords[i], stopwords);
+        if (isStopWord)
         {
-            Node<char *, int> *node = obj->getNode(allWords[i]);
+            continue;
+        }
+        Node<char *, int> *node = obj->getNode(allWords[i]);
+        if (node)
+        {
+            frequentWords[wordI] = node->getKey();
+            wordI++;
             node->setVal(node->getValue() + 1);
         }
-        else
+        else if (!obj->isPresent(allWords[i]))
         {
             obj->hashInsertion(allWords[i], 1);
         }
-    }
-    char **frequentWords = new char *[0]();
-    cout << "all words: ";
-    for (int i = 0; allWords[i]; i++)
-    {
-        cout << i;
-        Node<char *, int> *nodeobj = obj->getNode(allWords[i]);
-        if (nodeobj)
-        {
-            cout << nodeobj->getKey() << " -> " << nodeobj->getValue() << "\n";
-        }
-        else
-        {
-            cout << "not found";
-        }
+        node = nullptr;
     }
     delete obj;
     return frequentWords;
+}
+
+bool findWordInArrayOfChar(const char *ch, const char **list)
+{
+    for (int j = 0; list[j]; j++)
+    {
+        if (my_strcmp(ch, list[j]) == 0)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Task 2
@@ -275,8 +279,7 @@ void clearCharacters(char *data)
 }
 
 // Task 3
-// template <typename keyType, typename valType>
-// char *fillPlaceholder(char *text, HashMap<keyType, valType> *obj) {}
+char *fillPlaceholder(char *text, HashMap<char *, char *> *obj) {}
 
 // Task 4
 // Substring search

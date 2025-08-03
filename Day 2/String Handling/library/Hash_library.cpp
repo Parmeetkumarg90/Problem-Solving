@@ -85,7 +85,7 @@ void HashMap<keyType, valueType>::hashInsertion(keyType key, valueType val)
     {
         if (isMatched(current->getKey(), key))
         {
-            cout << "\nKey-Value pair {" << key << "," << val << "} already exists";
+            // cout << "\nKey-Value pair {" << key << "," << val << "} already exists";
             return;
         }
         current = current->getNext();
@@ -95,7 +95,7 @@ void HashMap<keyType, valueType>::hashInsertion(keyType key, valueType val)
     newNode->setNext(headNode);
     HashTable[headPosition] = newNode;
 
-    cout << "\nKey-Value pair {" << key << "," << val << "} added Successfully";
+    // cout << "\nKey-Value pair {" << key << "," << val << "} added Successfully";
     totalElements++;
 
     if (((totalElements * 100) / size) >= 75)
@@ -126,7 +126,7 @@ void HashMap<keyType, valueType>::hashDeletion(keyType key)
         {
             before->setNext(deletingNode->getNext());
             deletingNode->setNext(nullptr);
-            cout << "Key-value pair {" << deletingNode->getKey() << "," << deletingNode->getValue() << "} deleted successfully";
+            // cout << "Key-value pair {" << deletingNode->getKey() << "," << deletingNode->getValue() << "} deleted successfully";
             totalElements--;
             delete deletingNode;
         }
@@ -135,7 +135,7 @@ void HashMap<keyType, valueType>::hashDeletion(keyType key)
     {
         HashTable[headPosition] = headNode->getNext() ? headNode->getNext() : nullptr;
         headNode->setNext(nullptr);
-        cout << "Key-value pair {" << headNode->getKey() << "," << headNode->getValue() << "} deleted successfully";
+        // cout << "Key-value pair {" << headNode->getKey() << "," << headNode->getValue() << "} deleted successfully";
         totalElements--;
         delete headNode;
     }
@@ -212,7 +212,7 @@ void HashMap<keyType, valueType>::clear() // clear the whole hashtable
         HashTable[i] = nullptr;
     }
     totalElements = 0;
-    cout << "\nHashTable Cleared Successfully\n";
+    // cout << "\nHashTable Cleared Successfully\n";
 }
 
 template <typename keyType, typename valueType>

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./hashtable.h"
+#include "./HashMap(generic).h"
 
 // Task 1
 int size_tmy_strlen(const char *s);                                                 // return length before '\0'
@@ -11,6 +11,7 @@ void reverse_inplace(char *s);                                                  
 int is_palindrome(const char *s);                                                   // check if palidrome
 int count_words(const char *s);                                                     // count words
 void lowercase(const char *ch);                                                     // convert into lowercase
+bool findWordInArrayOfChar(const char *ch, const char **list);                      // find if a word is present in a list of words
 char **most_frequent_word(const char *text, const char **stopwords, int stopcount); // most frequestly used words
 
 // Task 2
@@ -20,7 +21,7 @@ void clearArrayOfString(char **data); // clear a array of character string
 void clearCharacters(char *data);     // clear a array of characters
 
 // // Task 3
-// char *fillPlaceholder(char *text, HashMap<keyType, valType> *obj);
+char *fillPlaceholder(char *text, HashMap<char *, char *> *obj);
 
 // // Task 4
 char *my_strstr(const char *haystack, const char *needle); // substring search

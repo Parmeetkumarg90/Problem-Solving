@@ -13,7 +13,7 @@ int main()
     obj->hashInsertion("name", name);
     obj->hashInsertion("city", city);
     obj->hashInsertion("course", course);
-    // cout << fillPlaceholder(textWithTemplate, obj);
+    cout << fillPlaceholder(textWithTemplate, obj);
     delete obj;
     cout << "\n";
     return 0;
