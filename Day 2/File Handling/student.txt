@@ -1,0 +1,4 @@
+name, class, roll no., subject,
+parmeet, bca, 1, computer, hi
+sumit, bba, 2, finance, there
+rohit, ba, 3, history, well

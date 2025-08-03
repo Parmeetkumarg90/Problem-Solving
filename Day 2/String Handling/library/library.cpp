@@ -14,6 +14,7 @@ int size_tmy_strlen(const char *s) // return length before '\0'
     }
     return count;
 }
+
 int my_strcmp(const char *a, const char *b) // lexicographical compare
 {
     int sizeOfA = size_tmy_strlen(a), sizeOfB = size_tmy_strlen(b);
@@ -55,7 +56,7 @@ char *my_strcpy(char *dest, const char *src)
 }
 
 // Append src to dest
-char *my_strcat(char *dest, const char *src)
+void my_strcat(char *dest, const char *src)
 {
     int i, sizeOfSrc = size_tmy_strlen(src), sizeOfDest = size_tmy_strlen(dest);
     for (i = 0; i < sizeOfDest; i++)
@@ -67,7 +68,6 @@ char *my_strcat(char *dest, const char *src)
         i++;
     }
     dest[i] = '\0';
-    return dest;
 }
 
 // Find first occurrence of char
@@ -227,7 +227,9 @@ char **tokenizer(const char *data)
     {
         allFields[fieldI] = new char[wordI + 1];
         for (int j = 0; j < wordI; j++)
+        {
             allFields[fieldI][j] = eachWord[j];
+        }
         allFields[fieldI][wordI] = '\0';
         fieldI++;
     }
@@ -239,7 +241,7 @@ char **tokenizer(const char *data)
 
 char *readFile(const char *filePath)
 {
-    fstream file("./student.csv", ios::in);
+    fstream file(filePath, ios::in);
     if (!file.is_open())
     {
         return nullptr;
@@ -279,7 +281,70 @@ void clearCharacters(char *data)
 }
 
 // Task 3
-char *fillPlaceholder(char *text, HashMap<char *, char *> *obj) {}
+char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
+{
+    if (!text || !text[0] || !obj)
+    {
+        cout << "Text or object missing";
+        return nullptr;
+    }
+    char **allPlaceholders = new char *[10], *eachWord = new char[200];
+    bool isParenthesisOpen = false;
+    int eachWordI = 0, placeIndex = 0;
+    int indexOfEachKey[10];
+    for (int i = 1; text[i]; i++)
+    {
+        if (text[i - 1] == '{' && text[i] == '{')
+        {
+            eachWordI = 0;
+            isParenthesisOpen = true;
+            indexOfEachKey[placeIndex] = i + 1;
+        }
+        else if ((text[i + 1] == '}' && text[i] == '}'))
+        {
+            allPlaceholders[placeIndex] = new char[eachWordI + 1];
+            for (int j = 0; j < eachWordI; j++)
+            {
+                allPlaceholders[placeIndex][j] = eachWord[j];
+            }
+            allPlaceholders[placeIndex][eachWordI] = '\0';
+            placeIndex++;
+            eachWordI = 0;
+        }
+        else if (isParenthesisOpen)
+        {
+            eachWord[eachWordI] = text[i];
+            eachWordI++;
+            eachWord[eachWordI] = '\0';
+        }
+    }
+    int currKey = 0, newTextI = 0;
+    char *newText = eachWord;
+    delete eachWord;
+    eachWord = nullptr;
+    for (int i = 0; text[i]; i++)
+    {
+        if (indexOfEachKey[currKey] > i)
+        {
+            newText[newTextI] = text[i];
+            newTextI++;
+        }
+        else if (currKey <= i)
+        {
+            Node<char *, char *> *currNode = obj->getNode(allPlaceholders[currKey]);
+            eachWord = currNode->getValue();
+            for (int j = 0; eachWord[j]; j++)
+            {
+                cout << eachWord[j];
+                newText[newTextI] = eachWord[j];
+                newTextI++;
+            }
+            currKey++;
+            i += size_tmy_strlen(allPlaceholders[currKey]);
+        }
+    }
+    return newText;
+}
 
 // Task 4
 // Substring search

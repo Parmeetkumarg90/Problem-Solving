@@ -1,11 +1,10 @@
-#include <iostream>
 #include "./HashMap(generic).h"
 
 // Task 1
 int size_tmy_strlen(const char *s);                                                 // return length before '\0'
 int my_strcmp(const char *a, const char *b);                                        // lexicographical compare
 char *my_strcpy(char *dest, const char *src);                                       // copy src into dest
-char *my_strcat(char *dest, const char *src);                                       // append src to dest
+void my_strcat(char *dest, const char *src);                                        // append src to dest
 char *my_strchr(const char *s, int c);                                              // find first occurrence of char
 void reverse_inplace(char *s);                                                      // reverse a string
 int is_palindrome(const char *s);                                                   // check if palidrome
