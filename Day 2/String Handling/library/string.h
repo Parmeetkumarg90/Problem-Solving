@@ -25,4 +25,6 @@ char *fillPlaceholder(char *text, HashMap<char *, char *> *obj);
 // // Task 4
 char *my_strstr(const char *haystack, const char *needle); // substring search
 
+char *normalizeTextByRemovingExtraSpace(char *text); // remove extra white spaces
+
 #include "./library.cpp"

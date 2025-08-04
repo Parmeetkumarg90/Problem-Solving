@@ -394,3 +394,24 @@ char *my_strstr(const char *haystack, const char *needle)
     }
     return nullptr;
 }
+
+// Task 5
+// remove extra white extra spaces
+char *normalizeTextByRemovingExtraSpace(char *text)
+{
+    int i = 1, j = 0;
+    for (; text[i]; i++)
+    {
+        if ((text[i - 1] == '\t' && text[i] == '\t') || (text[i - 1] == ' ' && text[i] == ' ') || (text[i - 1] == '\n' && text[i] == '\n'))
+        {
+            continue;
+        }
+        else
+        {
+            text[j] = text[i];
+            j++;
+        }
+    }
+    text[j] = '\0';
+    return text;
+}
