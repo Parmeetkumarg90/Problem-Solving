@@ -293,6 +293,8 @@ char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
     bool isParenthesisOpen = false;
     int eachWordI = 0, placeIndex = 0;
     int indexOfEachKey[10];
+
+    // get all placeholders
     for (int i = 1; text[i]; i++)
     {
         if (text[i - 1] == '{' && text[i] == '{')
@@ -324,6 +326,8 @@ char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
     eachWord = nullptr;
     int currKey = 0, newTextI = 0;
     char *newText = new char[size_tmy_strlen(text) * 2]();
+
+    // insert all values of placeholders
     for (int i = 0; text[i]; i++)
     {
         if (indexOfEachKey[currKey] - 2 > i)
