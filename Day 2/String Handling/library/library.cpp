@@ -9,8 +9,9 @@ using namespace std;
 int size_tmy_strlen(const char *s) // return length before '\0'
 {
     int count = 0;
-    for (count = 0; s[count] && s[count] != '\0'; count++)
+    while (s[count] != '\0')
     {
+        count++;
     }
     return count;
 }
@@ -288,7 +289,7 @@ char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
         cout << "Text or object missing";
         return nullptr;
     }
-    char **allPlaceholders = new char *[10], *eachWord = new char[200];
+    char **allPlaceholders = new char *[10], *eachWord = new char[20];
     bool isParenthesisOpen = false;
     int eachWordI = 0, placeIndex = 0;
     int indexOfEachKey[10];
@@ -310,6 +311,7 @@ char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
             allPlaceholders[placeIndex][eachWordI] = '\0';
             placeIndex++;
             eachWordI = 0;
+            isParenthesisOpen = false;
         }
         else if (isParenthesisOpen)
         {
@@ -318,31 +320,36 @@ char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
             eachWord[eachWordI] = '\0';
         }
     }
-    int currKey = 0, newTextI = 0;
-    char *newText = eachWord;
-    delete eachWord;
+    delete[] eachWord;
     eachWord = nullptr;
+    int currKey = 0, newTextI = 0;
+    char *newText = new char[size_tmy_strlen(text) * 2]();
     for (int i = 0; text[i]; i++)
     {
-        if (indexOfEachKey[currKey] > i)
+        if (indexOfEachKey[currKey] - 2 > i)
         {
             newText[newTextI] = text[i];
             newTextI++;
         }
-        else if (currKey <= i)
+        else if (indexOfEachKey[currKey] - 2 == i)
         {
             Node<char *, char *> *currNode = obj->getNode(allPlaceholders[currKey]);
-            eachWord = currNode->getValue();
-            for (int j = 0; eachWord[j]; j++)
+            if (!currNode)
             {
-                cout << eachWord[j];
-                newText[newTextI] = eachWord[j];
+                break;
+            }
+            char *eachValue = currNode->getValue();
+            for (int j = 0; eachValue[j]; j++)
+            {
+                newText[newTextI] = eachValue[j];
                 newTextI++;
             }
+            i += size_tmy_strlen(allPlaceholders[currKey]) + 3;
             currKey++;
-            i += size_tmy_strlen(allPlaceholders[currKey]);
         }
+        newText[newTextI] = '\0';
     }
+    clearArrayOfString(allPlaceholders);
     return newText;
 }
 
