@@ -16,6 +16,15 @@ int size_tmy_strlen(const char *s) // return length before '\0'
     return count;
 }
 
+char charLowerCase(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+    {
+        return c + 32; // Convert to lowercase
+    }
+    return c;
+}
+
 int my_strcmp(const char *a, const char *b) // lexicographical compare
 {
     int sizeOfA = size_tmy_strlen(a), sizeOfB = size_tmy_strlen(b);

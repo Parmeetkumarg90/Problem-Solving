@@ -10,6 +10,7 @@ void reverse_inplace(char *s);                                                  
 int is_palindrome(const char *s);                                                   // check if palidrome
 int count_words(const char *s);                                                     // count words
 void lowercase(const char *ch);                                                     // convert into lowercase
+char charLowerCase(char c);                                                         // convert character into lowercase
 bool findWordInArrayOfChar(const char *ch, const char **list);                      // find if a word is present in a list of words
 char **most_frequent_word(const char *text, const char **stopwords, int stopcount); // most frequestly used words
 
