@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+    Character *stringObj = new Character();
     char textWithTemplate[] = "Hello, my name is {{name}}. I am from {{city}}. I am doing {{course}}.";
     HashMap<char *, char *> *obj = new HashMap<char *, char *>();
     char name[] = {'p', 'a', 'r', 'm', 'e', 'e', 't', '\0'};
@@ -16,7 +17,7 @@ int main()
     obj->hashInsertion(key1, name);
     obj->hashInsertion(key2, city);
     obj->hashInsertion(key3, course);
-    cout << fillPlaceholder(textWithTemplate, obj); // bug for segementation fault
+    cout << stringObj->fillPlaceholder(textWithTemplate, obj); // bug for segementation fault
     delete obj;
     cout << "\n";
     return 0;

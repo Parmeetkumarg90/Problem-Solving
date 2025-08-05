@@ -6,7 +6,7 @@ using namespace std;
 
 // Task 1
 
-int size_tmy_strlen(const char *s) // return length before '\0'
+int Character::size_tmy_strlen(const char *s) // return length before '\0'
 {
     int count = 0;
     while (s[count] != '\0')
@@ -16,7 +16,7 @@ int size_tmy_strlen(const char *s) // return length before '\0'
     return count;
 }
 
-char charLowerCase(char c)
+char Character::charLowerCase(char c)
 {
     if (c >= 'A' && c <= 'Z')
     {
@@ -25,7 +25,7 @@ char charLowerCase(char c)
     return c;
 }
 
-int my_strcmp(const char *a, const char *b) // lexicographical compare
+int Character::my_strcmp(const char *a, const char *b) // lexicographical compare
 {
     int sizeOfA = size_tmy_strlen(a), sizeOfB = size_tmy_strlen(b);
     for (int i = 0, j = 0; i < sizeOfA && j < sizeOfB; i++, j++)
@@ -38,7 +38,7 @@ int my_strcmp(const char *a, const char *b) // lexicographical compare
     return 0;
 }
 
-void lowercase(char *ch)
+void Character::lowercase(char *ch)
 {
     if (!ch)
         return;
@@ -54,7 +54,7 @@ void lowercase(char *ch)
 }
 
 // Copy src into dest
-char *my_strcpy(char *dest, const char *src)
+void Character::my_strcpy(char *dest, const char *src)
 {
     int i, sizeOfSrc = size_tmy_strlen(src);
     for (i = 0; i < sizeOfSrc; i++)
@@ -62,11 +62,25 @@ char *my_strcpy(char *dest, const char *src)
         dest[i] = src[i];
     }
     dest[i] = '\0';
-    return dest;
 }
 
 // Append src to dest
-void my_strcat(char *dest, const char *src)
+void Character::my_strcat(char *dest, const char *src)
+{
+    int i, sizeOfSrc = size_tmy_strlen(src), sizeOfDest = size_tmy_strlen(dest);
+    for (i = 0; i < sizeOfDest; i++)
+    {
+    }
+    for (int j = 0; j < sizeOfSrc; j++)
+    {
+        dest[i] = src[j];
+        i++;
+    }
+    dest[i] = '\0';
+}
+
+// Append src to dest
+void Character::my_strcat(char *dest, const char *src)
 {
     int i, sizeOfSrc = size_tmy_strlen(src), sizeOfDest = size_tmy_strlen(dest);
     for (i = 0; i < sizeOfDest; i++)
@@ -81,7 +95,7 @@ void my_strcat(char *dest, const char *src)
 }
 
 // Find first occurrence of char
-char *my_strchr(const char *s, int c)
+char *Character::my_strchr(const char *s, int c)
 {
     int sizeOfS = size_tmy_strlen(s);
     for (int i = 0; i < sizeOfS; i++)
@@ -95,7 +109,7 @@ char *my_strchr(const char *s, int c)
 }
 
 // Reverse a string in place
-void reverse_inplace(char *s)
+void Character::reverse_inplace(char *s)
 {
     int sizeOfS = size_tmy_strlen(s) - 1;
     char temp;
@@ -109,7 +123,7 @@ void reverse_inplace(char *s)
 }
 
 // Check if palindrome
-int is_palindrome(const char *s)
+int Character::is_palindrome(const char *s)
 {
     int sizeOfS = size_tmy_strlen(s) - 1;
     for (int i = 0; i < sizeOfS; i++)
@@ -124,7 +138,7 @@ int is_palindrome(const char *s)
 }
 
 // Count words
-int count_words(const char *s)
+int Character::count_words(const char *s)
 {
     int totalWord = 0, sizeOfS = size_tmy_strlen(s);
     bool isWord = false;
@@ -147,7 +161,7 @@ int count_words(const char *s)
 }
 
 // Most frequently used word (ignoring stopwords)
-char **most_frequent_word(const char *text, const char **stopwords, int stopcount)
+char **Character::most_frequent_word(const char *text, const char **stopwords, int stopcount)
 {
     if (!text)
     {
@@ -185,7 +199,7 @@ char **most_frequent_word(const char *text, const char **stopwords, int stopcoun
     return frequentWords;
 }
 
-bool findWordInArrayOfChar(const char *ch, const char **list)
+bool Character::findWordInArrayOfChar(const char *ch, const char **list)
 {
     for (int j = 0; list[j]; j++)
     {
@@ -198,7 +212,7 @@ bool findWordInArrayOfChar(const char *ch, const char **list)
 }
 
 // Task 2
-char **tokenizer(const char *data)
+char **Character::tokenizer(const char *data)
 {
     if (!data)
     {
@@ -249,7 +263,7 @@ char **tokenizer(const char *data)
     return allFields;
 }
 
-char *readFile(const char *filePath)
+char *Character::readFile(const char *filePath)
 {
     fstream file(filePath, ios::in);
     if (!file.is_open())
@@ -269,7 +283,7 @@ char *readFile(const char *filePath)
     return allData;
 }
 
-void clearArrayOfString(char **data)
+void Character::clearArrayOfString(char **data)
 {
     int i = 0;
     while (data[i] != nullptr)
@@ -284,14 +298,14 @@ void clearArrayOfString(char **data)
     data = nullptr;
 }
 
-void clearCharacters(char *data)
+void Character::clearCharacters(char *data)
 {
     delete[] data;
     data = nullptr;
 }
 
 // Task 3
-char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
+char *Character::fillPlaceholder(char *text, HashMap<char *, char *> *obj)
 {
     if (!text || !text[0] || !obj)
     {
@@ -368,10 +382,12 @@ char *fillPlaceholder(char *text, HashMap<char *, char *> *obj)
 
 // Task 4
 // Substring search
-char *my_strstr(const char *haystack, const char *needle)
+char *Character::my_strstr(const char *haystack, const char *needle)
 {
-    char *newhaystack = my_strcpy(new char[size_tmy_strlen(haystack) + 1], haystack);
-    char *newneedle = my_strcpy(new char[size_tmy_strlen(haystack) + 1], needle);
+    char *newhaystack = new char[size_tmy_strlen(haystack) + 1];
+    my_strcpy(newhaystack, haystack);
+    char *newneedle = new char[size_tmy_strlen(haystack) + 1];
+    my_strcpy(newneedle, needle);
     lowercase(newhaystack);
     lowercase(newneedle);
     int sizeOfNeedle = size_tmy_strlen(newneedle), sizeOfHayStack = size_tmy_strlen(newhaystack);
@@ -396,22 +412,56 @@ char *my_strstr(const char *haystack, const char *needle)
                 }
                 if (compareLength == sizeOfNeedle)
                 {
-                    return (char *)&newhaystack[i];
+                    delete[] newhaystack;
+                    delete[] newneedle;
+                    return (char *)&haystack[i];
                 }
             }
         }
     }
+    delete[] newhaystack;
+    delete[] newneedle;
     return nullptr;
 }
 
 // Task 5
 // remove extra white extra spaces
-char *normalizeTextByRemovingExtraSpace(char *text)
+char *Character::normalizeTextByRemovingExtraSpace(char *text)
 {
     int i = 1, j = 0;
     for (; text[i]; i++)
     {
         if ((text[i - 1] == '\t' && text[i] == '\t') || (text[i - 1] == ' ' && text[i] == ' ') || (text[i - 1] == '\n' && text[i] == '\n'))
+        {
+            continue;
+        }
+        else
+        {
+            text[j] = text[i];
+            j++;
+        }
+    }
+    text[j] = '\0';
+    return text;
+}
+
+// convert character into lowercase
+char Character::charLowerCase(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+    {
+        return c + 32; // Convert to lowercase
+    }
+    return c;
+}
+
+// remove white spaces
+char *Character::normalizeTextByRemovingSpaces(char *text)
+{
+    int i = 0, j = 0;
+    for (; text[i]; i++)
+    {
+        if (text[i] == '\t' || text[i] == ' ' || text[i] == '\n')
         {
             continue;
         }

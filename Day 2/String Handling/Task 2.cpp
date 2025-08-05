@@ -4,6 +4,7 @@ using namespace std;
 
 int main()
 {
+    Character *obj = new Character();
     // char *data = readFile("./student.csv"); // readFile("./student.csv");
     fstream file("./student.csv", ios::in);
     if (!file.is_open())
@@ -20,13 +21,13 @@ int main()
     }
     allData[i] = '\0';
     file.close();
-    char **fields = new char *[count_words(allData) + 1];
-    fields = tokenizer(allData);
+    char **fields = new char *[obj->count_words(allData) + 1];
+    fields = obj->tokenizer(allData);
     for (int i = 0; fields[i]; i++)
     {
         cout << "'" << fields[i] << "' ";
     }
-    clearArrayOfString(fields);
+    obj->clearArrayOfString(fields);
     cout << "\n";
     return 0;
 }
