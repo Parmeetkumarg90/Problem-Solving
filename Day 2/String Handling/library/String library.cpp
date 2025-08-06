@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "./HashMap(generic).h"
+#include "./String.h"
 
 using namespace std;
 
@@ -473,4 +474,59 @@ char *Character::normalizeTextByRemovingSpaces(char *text)
     }
     text[j] = '\0';
     return text;
+}
+
+// convert long into string
+void Character::longIntoString(long long num, char *str)
+{
+    str[0] = '/';
+    if (num == 0)
+    {
+        str[1] = '0';
+        str[2] = '\0';
+    }
+    else
+    {
+        int i = 1, rem = 0;
+        if (num < 0)
+        {
+            num = -num;
+            str[i] = '-';
+            i++;
+        }
+        long long revNum = 0;
+        while (num > 0)
+        {
+            rem = num % 10;
+            revNum = revNum * 10 + rem;
+            num /= 10;
+        }
+        while (revNum > 0)
+        {
+            str[i] = (revNum % 10) + '0';
+            revNum /= 10;
+            i++;
+        }
+        str[i] = '\0';
+    }
+    char extension[] = {'.', 'h', 't', 'm', 'l', '\0'};
+    my_strcat(str, extension);
+}
+
+// convert string into number
+long long Character::stringIntoLong(char *str)
+{
+    int size = size_tmy_strlen(str), i = 0;
+    long long num = 0;
+    bool isNegative = false;
+    if (str[i] == '-')
+    {
+        isNegative = true;
+        i++;
+    }
+    for (; i < size; i++)
+    {
+        num = num * 10 + (str[i] - '0');
+    }
+    return num;
 }

@@ -1,4 +1,5 @@
-#include "./HashMap(generic).h"
+#ifndef String_H
+#define String_H
 
 class Character
 {
@@ -40,4 +41,6 @@ public:
     void longIntoString(long long num, char *str);   // convert long into string
 };
 
-#include "./library.cpp"
+#include "./String library.cpp"
+
+#endif
