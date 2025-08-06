@@ -17,15 +17,6 @@ int Character::size_tmy_strlen(const char *s) // return length before '\0'
     return count;
 }
 
-char Character::charLowerCase(char c)
-{
-    if (c >= 'A' && c <= 'Z')
-    {
-        return c + 32; // Convert to lowercase
-    }
-    return c;
-}
-
 int Character::my_strcmp(const char *a, const char *b) // lexicographical compare
 {
     int sizeOfA = size_tmy_strlen(a), sizeOfB = size_tmy_strlen(b);
@@ -61,21 +52,6 @@ void Character::my_strcpy(char *dest, const char *src)
     for (i = 0; i < sizeOfSrc; i++)
     {
         dest[i] = src[i];
-    }
-    dest[i] = '\0';
-}
-
-// Append src to dest
-void Character::my_strcat(char *dest, const char *src)
-{
-    int i, sizeOfSrc = size_tmy_strlen(src), sizeOfDest = size_tmy_strlen(dest);
-    for (i = 0; i < sizeOfDest; i++)
-    {
-    }
-    for (int j = 0; j < sizeOfSrc; j++)
-    {
-        dest[i] = src[j];
-        i++;
     }
     dest[i] = '\0';
 }
