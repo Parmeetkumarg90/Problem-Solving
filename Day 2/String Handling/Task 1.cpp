@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./library/string.h"
+#include "./library/String.h"
 using namespace std;
 
 int main()
