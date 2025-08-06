@@ -147,13 +147,13 @@ char **Character::most_frequent_word(const char *text, const char **stopwords, i
     {
         return nullptr;
     }
-    HashMap<char *, int> *obj = new HashMap<char *, int>();
     char **allWords = tokenizer(text);
     if (!allWords || !allWords[0])
     {
         return nullptr;
     }
-    char **frequentWords = new char *[5]();
+    HashMap<char *, int> *obj = new HashMap<char *, int>();
+    char **frequentWords = new char *[10]();
     int wordI = 0;
     for (int i = 0; allWords[i]; i++)
     {
