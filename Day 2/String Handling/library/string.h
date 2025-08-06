@@ -36,6 +36,8 @@ public:
     // Basic or normally used functions
     char *normalizeTextByRemovingSpaces(char *text); // remove white spaces
     char charLowerCase(char c);                      // convert character into lowercase
+    long long stringIntoLong(char *str);             // convert string into number
+    void longIntoString(long long num, char *str);   // convert long into string
 };
 
 #include "./library.cpp"
