@@ -1,5 +1,6 @@
 #ifndef String_H
 #define String_H
+#include "./HashMap(generic).h"
 
 class Character
 {
