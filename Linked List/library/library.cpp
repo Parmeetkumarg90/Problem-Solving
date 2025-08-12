@@ -13,6 +13,7 @@ template <typename valType>
 LL<valType>::LL()
 {
     head = nullptr;
+    count = 0;
 }
 
 template <typename valType>
@@ -33,22 +34,25 @@ void LL<valType>::clear()
         delete deleteNode;
         deleteNode = nullptr;
     }
+    head = nullptr;
+    count = 0;
 }
 
 template <typename valType>
-Node<valType> *LL<valType>::getNode(valType val)
+Node<valType> *LL<valType>::getNode(int index)
 {
-    Node<valType> *current = head, *before = nullptr;
-    while (current)
+    if (count < index || index < 0 || !head)
     {
-        if (isMatched(val, current->val))
-        {
-            return before;
-        }
-        before = current;
-        current = current->next;
+        cout << "Index is out of range";
+        return nullptr;
     }
-    return nullptr;
+    Node<valType> *traverse = head;
+    while (traverse && index > 1)
+    {
+        index--;
+        traverse = traverse->next;
+    }
+    return traverse;
 }
 
 template <typename valType>
@@ -143,7 +147,7 @@ void LL<valType>::deletionAtBegin()
 }
 
 template <typename valType>
-void LL<valType>::deletionAtMiddle(valType val)
+void LL<valType>::deletionAtMiddle(int index)
 {
     cout << "\n";
     if (!head)
@@ -219,18 +223,7 @@ void LL<valType>::deletionAtEnd()
 template <typename valType>
 Node<valType> *LL<valType>::isPresent(int index)
 {
-    if (count < index || index < 0 || !head)
-    {
-        cout << "Index is out of range";
-        return nullptr;
-    }
-    Node<valType> *traverse = head;
-    while (traverse && index > 1)
-    {
-        index--;
-        traverse = traverse->next;
-    }
-    return traverse;
+    return getNode(index);
 }
 
 template <typename valType>
@@ -286,24 +279,60 @@ bool LL<valType>::isMatched(int val1, int val2)
     return val1 == val2;
 }
 
-template <typename valType>
-LL<valType> LL<valType>::operator=(LL<valType> *obj)
-{
-    Node<valType> *objLL = obj->head;
-    if (!objLL)
-    {
-        return this;
-    }
-    Node<valType> *thisLL = new Node(objLL->val), *temp = thisLL;
-    objLL = objLL->next;
-    while (objLL)
-    {
-        temp->next = new Node(objLL->val);
-        temp = temp->next;
-        objLL = objLL->next;
-    }
-    this->head = thisLL;
-    this->c
-}
+// template <typename valType>
+// LL<valType> &LL<valType>::operator=(const LL<valType> &obj)
+// {
+//     if (this == &obj)
+//     {
+//         return *this;
+//     }
+//     clear();
+//     Node<valType> *objLL = obj.head;
+//     if (!objLL)
+//     {
+//         this->count = 0;
+//         this->head = nullptr;
+//         return *this;
+//     }
+//     this->head = new Node<valType>(objLL->val);
+//     Node<valType> *temp = head;
+//     objLL = objLL->next;
+//     while (objLL)
+//     {
+//         temp->next = new Node<valType>(objLL->val);
+//         temp = temp->next;
+//         objLL = objLL->next;
+//     }
+//     this->count = obj.count;
+//     return *this;
+// }
 
-// memory leak in operator overloading
+template <typename valType>
+LL<valType> &LL<valType>::operator=(const LL<valType> &obj)
+{
+    if (this == &obj)
+        return *this; // self-assignment safe
+
+    clear(); // free old nodes
+
+    if (!obj.head)
+    {
+        head = nullptr;
+        count = 0;
+        return *this;
+    }
+
+    head = new Node<valType>(obj.head->val);
+    Node<valType> *temp = head;
+    Node<valType> *objCurrent = obj.head->next;
+
+    while (objCurrent)
+    {
+        temp->next = new Node<valType>(objCurrent->val);
+        temp = temp->next;
+        objCurrent = objCurrent->next;
+    }
+    count = obj.count;
+
+    return *this;
+}

@@ -19,7 +19,7 @@ class LL
 private:
     int count = 0;
     Node<valType> *head;
-    Node<valType> *getNode(valType val);
+    Node<valType> *getNode(int index); // not working
 
     // for matching various type of data structure for all operations
     bool isMatched(const string &val1, const string &val2);
@@ -31,13 +31,13 @@ public:
     ~LL();
     // insertion
     void insertionAtBegin(valType val);
-    void insertionAtMiddle(int index, valType val);
-    void insertionAtEnd(valType val);
+    void insertionAtMiddle(int index, valType val); // not working
+    void insertionAtEnd(valType val);               // not working
 
     // deletion
-    void deletionAtBegin();
-    void deletionAtMiddle(valType val);
-    void deletionAtEnd();
+    void deletionAtBegin();           // not working
+    void deletionAtMiddle(int index); // not working
+    void deletionAtEnd();             // not working
 
     // searching
     Node<valType> *isPresent(int index);
@@ -49,7 +49,7 @@ public:
     void clear();
 
     // operator overloading for creating new obj
-    LL<valType> operator=(LL<valType> *obj);
+    LL<valType> &operator=(const LL<valType> &obj); // not working
 };
 
 #include "./library.cpp"

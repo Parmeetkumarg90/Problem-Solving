@@ -20,7 +20,8 @@ int main()
          << "\n#Press F for Deleting a value at middle."
          << "\n#Press G for Deleting a value at end."
          << "\n#Press S for searching a value."
-         << "\n#Press O for displaying whole Linked List.";
+         << "\n#Press O for displaying whole Linked List."
+         << "\n#Press W for deep copy using = operator overloading.";
 
     while (choice != 'X')
     {
@@ -46,7 +47,7 @@ int main()
         case 'N': // insertionAtEnd
             cout << "Enter a value: ";
             cin >> value;
-            llObj->insertionAtBegin(value);
+            llObj->insertionAtEnd(value);
             break;
         case 'D': // deletionAtBegin
             llObj->deletionAtBegin();
@@ -77,6 +78,14 @@ int main()
             cout << "Linked List: ";
             llObj->display();
             break;
+        // case 'W':
+        // {
+        //     LL<int> *newLL = llObj;
+        //     cout << "\nNew Object Nodes: ";
+        //     newLL->display();
+        //     delete newLL;
+        //     break;
+        // }
         case 'X': // stoping program
             cout << "\n\t\t==>>Program Closed Successfully<<==";
             break;
