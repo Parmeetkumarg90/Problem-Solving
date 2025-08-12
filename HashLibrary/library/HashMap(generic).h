@@ -71,6 +71,6 @@ public:
     HashMap<keyType, valueType> operator=(HashMap<keyType, valueType> *obj);
 };
 
-#include "./library.cpp"
+#include "./Hash library.cpp"
 
 #endif
