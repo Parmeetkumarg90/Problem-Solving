@@ -289,6 +289,21 @@ bool LL<valType>::isMatched(int val1, int val2)
 template <typename valType>
 LL<valType> LL<valType>::operator=(LL<valType> *obj)
 {
+    Node<valType> *objLL = obj->head;
+    if (!objLL)
+    {
+        return this;
+    }
+    Node<valType> *thisLL = new Node(objLL->val), *temp = thisLL;
+    objLL = objLL->next;
+    while (objLL)
+    {
+        temp->next = new Node(objLL->val);
+        temp = temp->next;
+        objLL = objLL->next;
+    }
+    this->head = thisLL;
+    this->c
 }
 
 // memory leak in operator overloading
