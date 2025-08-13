@@ -20,9 +20,20 @@ int Character::size_tmy_strlen(const char *s) // return length before '\0'
 int Character::my_strcmp(const char *a, const char *b) // lexicographical compare
 {
     int sizeOfA = size_tmy_strlen(a), sizeOfB = size_tmy_strlen(b);
+    char ch1, ch2;
     for (int i = 0, j = 0; i < sizeOfA && j < sizeOfB; i++, j++)
     {
-        if (a[i] != b[i])
+        ch1 = a[i];
+        ch2 = b[i];
+        if (ch1 >= 'A' && ch1 <= 'Z')
+        {
+            ch1 += 32;
+        }
+        if (ch2 >= 'A' && ch2 <= 'Z')
+        {
+            ch2 += 32;
+        }
+        if (ch1 != ch2)
         {
             return a[i] - b[i];
         }
@@ -260,10 +271,17 @@ char *Character::readFile(const char *filePath)
         return nullptr;
     }
     int i = 0;
-    char ch, *allData = new char[1000];
+    char ch, *allData = new char[10000000]();
     while (file.get(ch))
     {
-        allData[i] = ch;
+        if (i < 9999999)
+        {
+            allData[i] = ch;
+        }
+        else
+        {
+            break;
+        }
         i++;
     }
     allData[i] = '\0';
@@ -572,17 +590,33 @@ bool Character::startsWith(const char *mainStr, const char *searchStr)
     }
     return true;
 }
-
 char *Character::findExtension(const char *str)
 {
-    int size = size_tmy_strlen(str) - 1;
-    while (size >= 0)
+    if (!str)
+        return nullptr;
+
+    int len = size_tmy_strlen(str);
+    int i = len - 1;
+
+    while (i >= 0 && str[i] != '.')
     {
-        if (str[size] == '.')
+        if (str[i] == '?')
         {
-            return (char *)&str[size];
+            break;
         }
-        size--;
+        i--;
     }
-    return nullptr;
+
+    if (i < 0 || i == len - 1)
+    {
+        return nullptr;
+    }
+    char *ext = new char[len - i]();
+    int j = 0;
+    for (int k = i + 1; k < len; k++)
+    {
+        ext[j++] = str[k];
+    }
+    ext[j] = '\0';
+    return ext;
 }
